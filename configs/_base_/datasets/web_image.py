@@ -1,6 +1,6 @@
 # dataset settings
 dataset_type = 'WebImageDataset'
-data_root = 'data/web_image'
+data_root = 'data/my_data'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 crop_size = (512, 512)
@@ -31,7 +31,7 @@ test_pipeline = [
             dict(type='Collect', keys=['img']),
         ])
 ]
-img_dir = 'batman'
+img_dir = 'mickey'
 data = dict(
     samples_per_gpu=4,
     workers_per_gpu=4,

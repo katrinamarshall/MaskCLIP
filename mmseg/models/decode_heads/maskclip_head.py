@@ -52,12 +52,12 @@ class MaskClipHead(BaseDecodeHead):
         self.load_visual_projs()
 
     def load_text_embeddings(self):
-        loaded = torch.load(self.text_embeddings_path, map_location='cuda')
+        loaded = torch.load(self.text_embeddings_path, map_location='cpu')
         self.text_embeddings[:, :] = loaded[:, :]
         print_log(f'Loaded text embeddings from {self.text_embeddings_path}', logger=get_root_logger())
 
     def load_visual_projs(self):
-        loaded = torch.load(self.visual_projs_path, map_location='cuda')
+        loaded = torch.load(self.visual_projs_path, map_location='cpu')
         attrs = ['proj'] if self.vit else ['q_proj', 'k_proj', 'v_proj', 'c_proj']
         for attr in attrs:
             current_attr = getattr(self, attr)
@@ -67,6 +67,16 @@ class MaskClipHead(BaseDecodeHead):
                     state_dict[key] = state_dict[key][:, :, None, None]
             current_attr.load_state_dict(state_dict)
         print_log(f'Loaded proj weights from {self.visual_projs_path}', logger=get_root_logger())
+
+    # def load_visual_projs(self):
+    #     if self.visual_projs_path is None:
+    #         return  # skip loading visual projection weights
+    #     loaded = torch.load(self.visual_projs_path, map_location='cpu')
+    #     for attr in loaded:
+    #         if 'proj' in attr:
+    #             state_dict = loaded[attr]
+    #             self.visual_projs.load_state_dict(state_dict)
+    #             break
     
     def forward(self, inputs):
         x = self._transform_inputs(inputs)

@@ -1,13 +1,12 @@
 # dataset settings
-dataset_type = 'PascalVOCDataset20'
-# data_root = 'data/VOCdevkit/VOC2012'
+dataset_type = 'MyDataset'
 data_root = 'data/my_data'
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 crop_size = (512, 512)
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='LoadAnnotations', reduce_zero_label=True),
+    dict(type='LoadAnnotations'),
     dict(type='Resize', img_scale=(2048, 512), ratio_range=(0.5, 2.0)),
     dict(type='RandomCrop', crop_size=crop_size, cat_max_ratio=0.75),
     dict(type='RandomFlip', prob=0.5),
@@ -32,63 +31,25 @@ test_pipeline = [
             dict(type='Collect', keys=['img']),
         ])
 ]
-# data = dict(
-#     samples_per_gpu=4,
-#     workers_per_gpu=4,
-#     train=dict(
-#         type=dataset_type,
-#         data_root=data_root,
-#         img_dir='JPEGImages',
-#         ann_dir=['SegmentationClass', 'SegmentationClassAug'],
-#         split=[
-#             'ImageSets/Segmentation/train.txt',
-#             'ImageSets/Segmentation/aug.txt'
-#         ],
-#         pipeline=train_pipeline),
-#     val=dict(
-#         type=dataset_type,
-#         data_root=data_root,
-#         img_dir='JPEGImages',
-#         ann_dir='SegmentationClass',
-#         split='ImageSets/Segmentation/val.txt',
-#         pipeline=test_pipeline),
-#     test=dict(
-#         type=dataset_type,
-#         data_root=data_root,
-#         img_dir='JPEGImages',
-#         ann_dir='SegmentationClass',
-#         split='ImageSets/Segmentation/val.txt',
-#         pipeline=test_pipeline))
-
+img_dir = 'mickey'
 data = dict(
     samples_per_gpu=4,
     workers_per_gpu=4,
-
-    # train can stay as-is or be ignored if you are not training
     train=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir='JPEGImages',
-        ann_dir=['SegmentationClass', 'SegmentationClassAug'],
-        split=[
-            'ImageSets/Segmentation/train.txt',
-            'ImageSets/Segmentation/aug.txt'
-        ],
+        img_dir=img_dir,
+        ann_dir=None,
         pipeline=train_pipeline),
-
     val=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir='JPEGImages',
+        img_dir=img_dir,
         ann_dir=None,
-        split='ImageSets/Segmentation/my_infer.txt',
         pipeline=test_pipeline),
-
     test=dict(
         type=dataset_type,
         data_root=data_root,
-        img_dir='JPEGImages',
+        img_dir=img_dir,
         ann_dir=None,
-        split='ImageSets/Segmentation/my_infer.txt',
-        pipeline=test_pipeline),
-)
+        pipeline=test_pipeline))
