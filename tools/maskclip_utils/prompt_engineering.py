@@ -21,6 +21,7 @@ mickey_classes = ['Mickey Mouse', 'Donald Duck'] + bg_classes
 batman_classes = ['Batman', 'Joker'] + bg_classes
 mario_classes = ['Mario', 'Luigi'] + bg_classes
 gates_classes = ['Bill Gates', 'Steve Jobs'] + bg_classes
+hk_classes = ['french toast', 'pineapple bun', 'egg tart'] + bg_classes
 
 cityscapes_no_person_classes = ["road", "sidewalk", "building", "wall", "fence", "pole", "traffic light", "traffic sign", "vegetation", "terrain", "sky", "rider", "car", "truck", "bus", "train", "motorcycle", "bicycle"]
 batman_ext_classes = ['Batman', 'Joker', 'James Gordon', 'The Penguin', 'Robin', 'Alfred Pennyworth', 'Catwoman', 'Harley Quinn'] + cityscapes_no_person_classes
@@ -38,7 +39,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Prompt engeering script')
     parser.add_argument('--model', default='RN50', choices=['RN50', 'RN101', 'RN50x4', 'RN50x16', 'ViT32', 'ViT16'], help='clip model name')
     parser.add_argument('--class-set', default=['voc'], nargs='+',
-        choices=['city', 'ade', 'stuff', 'voc', 'context', 'acontext', 'mickey', 'batman', 'mario', 'gates', 'blur', 'sports', 'car_brands', 'batman_ext', 'car_color'],
+        choices=['city', 'ade', 'stuff', 'voc', 'context', 'acontext', 'mickey', 'batman', 'mario', 'gates', 'hk', 'blur', 'sports', 'car_brands', 'batman_ext', 'car_color'],
         help='the set of class names')
     parser.add_argument('--no-prompt-eng', action='store_true', help='disable prompt engineering')
 
@@ -66,7 +67,7 @@ if __name__ == '__main__':
 
     classes = []
     all_set_name = ''
-    name_mapping = {'city': cityscapes_classes, 'ade': ade20k_classes, 'stuff': coco_stuff_classes, 'voc': voc_classes, 'context': pascal_context_classes, 'acontext': all_pascal_context_classes, 'mickey': mickey_classes, 'batman': batman_classes, 'mario': mario_classes, 'gates': gates_classes, 'blur': blur_classes, 'sports': sports_classes, 'car_brands': car_brands_classes, 'batman_ext': batman_ext_classes, 'car_color': car_color_classes}
+    name_mapping = {'city': cityscapes_classes, 'ade': ade20k_classes, 'stuff': coco_stuff_classes, 'voc': voc_classes, 'context': pascal_context_classes, 'acontext': all_pascal_context_classes, 'mickey': mickey_classes, 'batman': batman_classes, 'mario': mario_classes, 'gates': gates_classes, 'hk': hk_classes, 'blur': blur_classes, 'sports': sports_classes, 'car_brands': car_brands_classes, 'batman_ext': batman_ext_classes, 'car_color': car_color_classes}
     for set_name in args.class_set:
         if set_name in name_mapping:
             classes += name_mapping[set_name]

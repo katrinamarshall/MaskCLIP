@@ -9,7 +9,7 @@ from .custom import CustomDataset
 class WebImageDataset(CustomDataset):
     def __init__(self, **kwargs):
         data_name = kwargs.pop('data_name', 'batman')
-        if data_name in ['batman', 'gates', 'mickey', 'mario']:
+        if data_name in ['batman', 'gates', 'mickey', 'mario', 'hk']:
             from tools.maskclip_utils.prompt_engineering import bg_classes
             WebImageDataset.CLASSES = ['obj1', 'obj2'] + bg_classes
             WebImageDataset.PALETTE = [[255, 0, 0], [0, 0, 255]] + [[0, 0, 0]] * len(bg_classes)

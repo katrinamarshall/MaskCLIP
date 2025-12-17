@@ -31,7 +31,7 @@ test_pipeline = [
             dict(type='Collect', keys=['img']),
         ])
 ]
-img_dir = 'mickey'
+img_dir = 'hk'
 data = dict(
     samples_per_gpu=4,
     workers_per_gpu=4,

@@ -2,8 +2,8 @@ _base_ = [
     '../../_base_/models/maskclip_vit16.py', '../../_base_/datasets/web_image.py', 
     '../../_base_/default_runtime.py', '../../_base_/schedules/schedule_20k.py'
 ]
-img_dir = 'mickey'
-num_class = 7
+img_dir = 'hk'
+num_class = 8
 model = dict(
     decode_head=dict(
         num_classes=num_class,
